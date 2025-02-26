@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My First Web Page</title>
+    <style>
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            /* Permite que los elementos salten de línea */
+            justify-content: center;
+            /* Centra los elementos en la fila */
+            gap: 10px;
+            /* Espacio entre los elementos */
+        }
+
+        article {
+            width: calc(100% / 6 - 10px);
+            /* Para que se muestren 6 por fila */
+            max-width: 200px;
+            /* Limitar el tamaño */
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 150px;
+            /* Para evitar imágenes demasiado grandes */
+        }
+    </style>
+    <script type="module">
+        //Obtener
+        fetch('http://localhost:3000/movies')
+            .then(res => res.json())
+            .then(movies => {
+                const html = movies.map(
+                    movie => `
+                            <article data-id="${movie.id}">
+                                <img src="${movie.poster}" alt="${movie.title}">
+                                <h2>${movie.title}</h2>
+                                <p>${movie.year}</p>
+                                <hr>
+                                <button onclick="deleteMovie('${movie.id}')">Eliminar</button>
+                            </article>
+                    `).join('')
+                document.querySelector("main").innerHTML = html
+            })
+            .catch(error => console.error('Error al cargar películas:', error))
+    </script>
+    <script>
+        //Eliminar
+        function deleteMovie(id) {
+            fetch(`http://localhost:3000/movies/${id}`, {
+                method: 'DELETE'
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('No se pudo eliminar la película')
+                return res.json()
+            })
+            .then(() => {
+                location.reload()
+            })
+            .catch(error => console.error('Error al eliminar película:', error))
+        }
+    </script>
+</head>
+
+<body>
+    <main></main>
+</body>

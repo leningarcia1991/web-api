@@ -1,0 +1,28 @@
+### Consultar raiz
+GET http://localhost:3000/movies
+### Consultar peliculas por id
+GET http://localhost:3000/movies/241bf55d-b649-4109-af7c-0e6890ded3fc
+### Consultar peliculas por genero
+GET http://localhost:3000/movies?genre=drama
+###POST para crear una pelicula
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "id": "c23ceabd-b4a0-441c-885b-cba15d69ebab",
+  "title": "Jaws",
+  "year": 1975,
+  "director": "Steven Spielberg",
+  "duration": 128,
+  "poster": "https://i.etsystatic.com/20994966/r/il/5409a2/6104018152/il_1140xN.6104018152_p24i.jpg",
+  "genre": ["Action", "Adventure", "Fantasy","Drama"],
+  "rate": 8.4
+}
+### PATH para actualizar una pelicula
+PATCH http://localhost:3000/movies/7d2832f8-c70a-410e-8963-4c93bf36cc9c
+Content-Type: application/json
+
+{
+  "year": 1985,
+  "rate": 9.5
+}
