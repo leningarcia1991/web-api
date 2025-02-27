@@ -1,4 +1,4 @@
-const z = require('zod')
+import z from 'zod'
 
 const movieSchema = z.object({
   title: z.string({ required_error: 'Title is required' })
@@ -63,15 +63,10 @@ const movieSchema = z.object({
     .max(10)
 })
 
-const validateMovie = (movie) => {
+export const validateMovie = (movie) => {
   return movieSchema.safeParse(movie)
 }
 
-const validatePartialMovie = (input) => {
+export const validatePartialMovie = (input) => {
   return movieSchema.partial().safeParse(input)
-}
-
-module.exports = {
-  validateMovie,
-  validatePartialMovie
 }
